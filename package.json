@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Sams",
   "license": "MIT",
+  "browser": {
+    "child_process": false
+  },
   "scripts": {
     "dev": "next dev -p 4001",
     "build": "next build",
@@ -19,12 +22,14 @@
     "@chakra-ui/react": "^1.6.4",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
+    "@google-cloud/dialogflow": "^4.1.0",
     "formik": "^2.2.9",
     "formik-chakra-ui": "^1.4.7",
     "framer-motion": "^4.1.17",
     "next": "^11.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "uuid": "^8.3.2",
     "yup": "^0.32.9"
   }
 }

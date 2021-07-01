@@ -1,9 +1,7 @@
-import { SearchIcon, StarIcon } from "@chakra-ui/icons";
+import { SearchIcon } from "@chakra-ui/icons";
 import {
-  Badge,
   Box,
   Button,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
@@ -13,34 +11,31 @@ import {
 import { Field, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { AnswerResult } from "../components/AnswerResult";
 import { Layout } from "../components/Layout";
+import { AnswerResult } from "../components/results/AnswerResult";
+import { EmptyResult } from "../components/results/EmptyResult";
+import { SabioAnswer } from "../types/types";
+
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  "../../hack-bot-318407-6493a8ac6783.json";
 
 const Index = () => {
-  interface Property {
-    imageUrl: string;
-    imageAlt: string;
-    beds: number;
-    baths: number;
-    title: string;
-    formattedPrice: string;
-    reviewCount: number;
-    rating: number;
-  }
-
-  const properties = [
+  const sabioAnswers: [SabioAnswer] = [
     {
-      imageUrl: "https://bit.ly/2Z4KKcF",
-      imageAlt: "Rear view of modern home with pool",
-      beds: 3,
-      baths: 2,
-      title: "Modern home in city center in the heart of historic Los Angeles",
-      formattedPrice: "$1,900.00",
-      reviewCount: 34,
-      rating: 4,
+      title: "Resetting your password",
+      detail: "To reset your password you need to go to the url below.",
+      imageUrl: "",
+      urls: [
+        {
+          title: "Password reset",
+          url: "https://thesab.io/password",
+        },
+      ],
     },
   ];
-  const [resultMessage, setResultMessage] = useState<Property[]>([]);
+
+  const [resultMessage, setResultMessage] = useState<SabioAnswer[]>([]);
+  const [submitted, setSubmitted] = useState(false);
 
   const initialValues = {
     search: "",
@@ -56,11 +51,16 @@ const Index = () => {
     values: any,
     { setSubmitting, setErrors, setStatus, resetForm }: any
   ) => {
+    setSubmitted(false);
     sleep(2000).then(() => {
       console.log(JSON.stringify(values, null, 2));
-      setResultMessage(properties);
+
+      //Do some API call here
+
+      //Set the resutls
+      setResultMessage(sabioAnswers);
+      setSubmitted(true);
       setSubmitting(false);
-      resetForm();
     });
   };
 
@@ -108,13 +108,15 @@ const Index = () => {
           )}
         </Formik>
       </Box>
-      {resultMessage && (
+
+      {resultMessage.length > 0 && submitted && (
         <Stack>
-          {resultMessage.map((property, index) => {
-            return <AnswerResult key={index} answer={property} />;
+          {resultMessage.map((answer, index) => {
+            return <AnswerResult key={index} answer={answer} />;
           })}
         </Stack>
       )}
+      {resultMessage.length == 0 && submitted && <EmptyResult />}
     </Layout>
   );
 };

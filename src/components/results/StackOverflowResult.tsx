@@ -2,11 +2,11 @@ import { StarIcon } from "@chakra-ui/icons";
 import { Badge, Box, Image } from "@chakra-ui/react";
 import React from "react";
 
-interface AnswerResultProps {
+interface StackOverflowResultProps {
   answer?: any;
 }
 
-export const AnswerResult: React.FC<AnswerResultProps> = ({
+export const StackOverflowResult: React.FC<StackOverflowResultProps> = ({
   children,
   answer,
 }) => {
