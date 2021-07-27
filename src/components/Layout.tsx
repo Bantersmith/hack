@@ -17,9 +17,6 @@ export const Layout: React.FC<LayoutProps> = ({ children, variant }) => {
           useSystemColorMode: false,
         }}
       >
-        <Head>
-          <link rel="shortcut icon" href="../../static/favicon.ico" />
-        </Head>
         <NavBar />
         <Wrapper variant={variant}>{children}</Wrapper>
       </ColorModeProvider>

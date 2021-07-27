@@ -94,7 +94,8 @@ const Index = () => {
                 </InputLeftElement>
                 <InputRightElement width="4.5rem">
                   <Button
-                    colorScheme="yellow"
+                    color="black"
+                    bgColor="#FBFBB3"
                     h="1.75rem"
                     size="md"
                     type="submit"
@@ -110,7 +111,7 @@ const Index = () => {
       </Box>
 
       {resultMessage.length > 0 && submitted && (
-        <Stack>
+        <Stack textColor="#10006B">
           {resultMessage.map((answer, index) => {
             return <AnswerResult key={index} answer={answer} />;
           })}

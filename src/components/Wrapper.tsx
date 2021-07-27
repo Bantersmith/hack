@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/layout";
+import { Box, Spacer } from "@chakra-ui/layout";
 import React from "react";
 import {Img} from "@chakra-ui/react";
 interface WrapperProps {
@@ -18,8 +18,9 @@ export const Wrapper: React.FC<WrapperProps> = ({
       p={4}
     >
       {children}
-      <Box>
-        <Img boxSize="300px" src="./images/robot.PNG" alt="Sabio Logo"/>
+      <Spacer />
+      <Box ml="96" width="300px">
+        <Img src="./images/robot2.PNG" alt="Sabio Logo"/>
       </Box>      
     </Box>
 
