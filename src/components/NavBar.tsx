@@ -1,22 +1,18 @@
-import { Button } from "@chakra-ui/button";
 import { Box, Flex, Link } from "@chakra-ui/layout";
-import { Heading, Icon, Text } from "@chakra-ui/react";
-import NextLink from "next/link";
+import { Img } from "@chakra-ui/react";
 import React from "react";
 
 interface NavBarProps {}
 
 const NavBar: React.FC<NavBarProps> = ({}) => {
-  let body = <Flex color="white" marginTop={2}></Flex>;
+  let body = <Flex marginTop={2}></Flex>;
 
   return (
-    <Flex zIndex={1} position="sticky" top={0} bg="#313536" p={4}>
+    <Flex zIndex={1} position="sticky" top={0} bg="#5E1BB3" p={4}>
       <Flex flex={1}>
-        <NextLink href="/">
-          <Link>
-            <Heading color="#F49A74">TheSab.io</Heading>
-          </Link>
-        </NextLink>
+          <Box w="150px">
+            <Img src="./images/sabiologo.PNG" alt="Sabio Logo"/>
+          </Box>
         <Box ml={"auto"}>{body}</Box>
       </Flex>
     </Flex>

@@ -94,7 +94,7 @@ const Index = () => {
                 </InputLeftElement>
                 <InputRightElement width="4.5rem">
                   <Button
-                    colorScheme="teal"
+                    colorScheme="yellow"
                     h="1.75rem"
                     size="md"
                     type="submit"
