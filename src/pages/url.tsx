@@ -27,21 +27,22 @@ const url = () => {
             <Box mt={4}>
               <InputField
                 name="url"
-                placeholder="url"
+                placeholder="URL"
                 label="url"
                 type="text"
               />
             </Box>
             <Box mt={4}>
-              <InputField name="slug" placeholder="slug" label="slug" />
+              <InputField name="slug" placeholder="Slug" label="slug" type="text" />
             </Box>
             <Button
               mt={4}
               type="submit"
               isLoading={isSubmitting}
-              colorScheme="teal"
+              bgColor="#FBFBB3"
+              color="black"
             >
-              shorten
+              Shorten
             </Button>
           </Form>
         )}
