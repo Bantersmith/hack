@@ -1,5 +1,5 @@
 import { StarIcon } from "@chakra-ui/icons";
-import { Badge, Box, Image } from "@chakra-ui/react";
+import { Badge, Box, Image, Img, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
 interface StackOverflowResultProps {
@@ -44,7 +44,12 @@ export const StackOverflowResult: React.FC<StackOverflowResultProps> = ({
           lineHeight="tight"
           isTruncated
         >
-          {answer.title}
+          <Stack direction="row">
+            <Box w="50px">
+              <Img src="./images/confluence.PNG" alt="Sabio"/>
+            </Box>            
+            <Text fontSize="2xl">{answer.title}</Text>
+          </Stack>
         </Box>
 
         <Box>

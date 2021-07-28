@@ -2,6 +2,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
+  Img,
   Input,
   InputGroup,
   InputLeftElement,
@@ -36,6 +37,7 @@ const Index = () => {
 
   const [resultMessage, setResultMessage] = useState<SabioAnswer[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const resultImg = "./images/stackoverflow.PNG"
 
   const initialValues = {
     search: "",
@@ -62,6 +64,8 @@ const Index = () => {
       setSubmitted(true);
       setSubmitting(false);
     });
+
+    
   };
 
   return (
@@ -94,7 +98,8 @@ const Index = () => {
                 </InputLeftElement>
                 <InputRightElement width="4.5rem">
                   <Button
-                    colorScheme="teal"
+                    color="black"
+                    bgColor="#FBFBB3"
                     h="1.75rem"
                     size="md"
                     type="submit"
@@ -110,11 +115,15 @@ const Index = () => {
       </Box>
 
       {resultMessage.length > 0 && submitted && (
-        <Stack>
-          {resultMessage.map((answer, index) => {
-            return <AnswerResult key={index} answer={answer} />;
-          })}
-        </Stack>
+          <Stack textColor="#10006B">          
+            {resultMessage.map((answer, index) => {
+              return <AnswerResult key={index} answer={answer} />;
+            })}
+            {/* <Box w="120px" pl="6">
+              <Img src={resultImg} alt="Sabio"/>
+            </Box>   */}
+          </Stack>
+
       )}
       {resultMessage.length == 0 && submitted && <EmptyResult />}
     </Layout>
