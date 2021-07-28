@@ -1,5 +1,5 @@
 import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
-import { Badge, Box, Button, Image, Link, Text } from "@chakra-ui/react";
+import { Badge, Box, Button, Image, Img, Link, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { SabioAnswer } from "../../types/types";
 
@@ -29,8 +29,13 @@ export const AnswerResult: React.FC<AnswerResultProps> = ({
           as="h1"
           lineHeight="tight"
           isTruncated
-        >
-          <Text fontSize="2xl">{answer.title}</Text>
+        > 
+          <Stack direction="row">
+            <Box w="50px">
+              <Img src="./images/sabio.PNG" alt="Sabio"/>
+            </Box>            
+            <Text fontSize="2xl">{answer.title}</Text>
+          </Stack>
         </Box>
       </Box>
       <Box pl="6" pr="6">
