@@ -2,7 +2,6 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Img,
   Input,
   InputGroup,
   InputLeftElement,
@@ -13,8 +12,9 @@ import { Field, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Layout } from "../components/Layout";
-import { SabioAnswer } from "../components/results/SabioAnswer";
 import { EmptyResult } from "../components/results/EmptyResult";
+import { SabioAnswer } from "../components/results/SabioAnswer";
+import { StackOverflowAnswer } from "../components/results/StackOverflowAnswer";
 import { ISabioAnswer } from "../types/types";
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
@@ -135,7 +135,7 @@ const Index = () => {
         <Stack textColor="#10006B">
           {stackAnswer.map((answer, index) => {
             console.log("Answer is:", answer);
-            return <SabioAnswer key={index} answer={answer} />;
+            return <StackOverflowAnswer key={index} answer={answer} />;
           })}
         </Stack>
       )}
