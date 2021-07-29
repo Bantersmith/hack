@@ -30,7 +30,9 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
         overflow="hidden"
       >
         {answer.imageUrl && (
-          <Image src={answer.imageUrl} maxH={"100px"} minW={"100%"} />
+          <Image
+              objectFit="cover"
+              src={answer.imageUrl} maxH={"100px"} minW={"100%"} />
         )}
         <Box p="6">
           <Box
@@ -38,13 +40,14 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
             fontWeight="semibold"
             as="h1"
             lineHeight="tight"
+            alignItems="center"
             isTruncated
           >
             <Stack direction="row">
               <Box w="50px">
                 <Img src="./images/sabio.PNG" alt="Sabio" />
               </Box>
-              <Text fontSize="2xl">{answer.title}</Text>
+              <Text fontSize="2xl" padding="2">{answer.title}</Text>
             </Stack>
           </Box>
         </Box>
@@ -54,7 +57,6 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
             fontWeight="semibold"
             as="h4"
             lineHeight="tight"
-            isTruncated
           >
             {answer.detail}
           </Box>
