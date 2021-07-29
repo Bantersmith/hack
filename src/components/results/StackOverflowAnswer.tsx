@@ -35,7 +35,7 @@ export const StackOverflowAnswer: React.FC<StackOverflowAnswerProps> = ({
           >
             <Stack direction="row">
               <Box w="50px">
-                <Img src="./images/stackoverflow.PNG" alt="StackOverflow" />
+                <Img src="./images/stackoverflow.png" alt="StackOverflow" />
               </Box>
               <Text fontSize="2xl">{answer.title}</Text>
             </Stack>
