@@ -57,6 +57,7 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
             fontWeight="semibold"
             as="h4"
             lineHeight="tight"
+            maxW="800"
           >
             {answer.detail}
           </Box>
@@ -72,9 +73,8 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
                 isTruncated
               >
                 <Text>
-                  {url.title + " - "}
                   <Link href={url.url} isExternal color="#F49A74">
-                    {url.url.substr(url.url.indexOf("//") + 2)}
+                    {url.title}
                     <ExternalLinkIcon mx="2px" />
                   </Link>
                 </Text>
