@@ -16,7 +16,6 @@ const singleQuestion = (question) => {
 };
 
 export const RecentQuestions: React.FC<any> = ({ questions }) => {
-  console.log(questions)
   const renderedAnswers = questions.map((question) => {
     return singleQuestion(question.friendlyName);
   });

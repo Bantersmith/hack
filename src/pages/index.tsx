@@ -22,27 +22,19 @@ import { RecentQuestions } from "../components/results/RecentQuestions";
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
 
-  export async function getServerSideProps(context) {
-    const top5response = await fetch(`https://intent.davidwalker.dev/stats/top/5`, {
-      method: "GET",
-    });
-  
-    const questions = await top5response.json();
-    console.log("Data:", questions);
-
-    const recentResponse = await fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
-      method: "GET",
-    });
-  
-    const recents = await recentResponse.json();
-    console.log("recents:", recents);
-  
-    return {
-      props: {questions,recents}, // will be passed to the page component as props
-    }
-
-
-  };
+  export async function getServerSideProps() {
+    const [top5response, recentResponse] = await Promise.all([
+      fetch(`https://intent.davidwalker.dev/stats/top/5`, {
+      method: "GET"}), 
+      fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
+      method: "GET"}), 
+    ]);
+    const [questions, recents] = await Promise.all([
+      top5response.json(), 
+      recentResponse.json()
+    ]);
+    return { props: { questions, recents } };
+  }
 
 const getSearch = async (term) => {
   const response = await fetch(
@@ -58,7 +50,7 @@ const getSearch = async (term) => {
 
 
 
-const Index = (questions,recents) => {
+const Index = (props) => {
   let sabioAnswerArr: any = [];
   let stackAnswerArr: any = [];
   let confAnswerArr: any = [];
@@ -147,10 +139,10 @@ const Index = (questions,recents) => {
       <Stack direction ="row">
         <Stack> 
           <Box>
-            <TopFive questions={ questions.questions } />
+            <TopFive questions={ props.questions } />
           </Box>
           <Box>
-            <RecentQuestions questions={ questions.questions } />
+            <RecentQuestions questions={ props.recents } />
           </Box>
         </Stack>
         <Box>

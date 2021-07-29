@@ -16,9 +16,6 @@ const singleQuestion = (question) => {
 };
 
 export const TopFive: React.FC<any> = ({ questions }) => {
-
-
-  console.log("questions", questions)
   let renderedAnswers: any
 
   if(typeof questions !== 'undefined') {
