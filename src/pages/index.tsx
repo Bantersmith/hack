@@ -16,8 +16,11 @@ import { Layout } from "../components/Layout";
 import { SabioAnswer } from "../components/results/SabioAnswer";
 import { EmptyResult } from "../components/results/EmptyResult";
 import { ISabioAnswer } from "../types/types";
+<<<<<<< HEAD
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
+=======
+>>>>>>> develop
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";

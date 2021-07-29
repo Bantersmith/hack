@@ -18,4 +18,8 @@ export interface ISabioAnswer {
   imageUrl?: string;
   urls?: [IUrl];
   actions?: [IAction];
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> develop
