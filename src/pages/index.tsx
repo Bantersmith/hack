@@ -155,7 +155,7 @@ const Index = (questions,recents) => {
           </Box>
         </Stack>
         <Box>
-          {sabioAnswer.length > 0 &&
+            {sabioAnswer.length > 0 &&
             submitted &&
             sabioAnswer[0].intent != "Default Fallback Intent" && (
               <Stack textColor="#10006B">
@@ -166,20 +166,16 @@ const Index = (questions,recents) => {
               </Stack>
             )}
 
-              {stackAnswer.length > 0 && submitted && (
-                <Stack textColor="#10006B">
-                  {stackAnswer.map((answer, index) => {
-                    console.log("Answer is:", answer);
-                    return <StackOverflowResult key={index} answer={answer} />;
-                  })}
-                </Stack>
-              )}
+          {sabioAnswer.length == 0 && submitted && <EmptyResult />}
+          {sabioAnswer.length > 0 &&
+            submitted &&
+            sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
 
           {stackAnswer.length > 0 && submitted && (
             <Stack textColor="#10006B">
               {stackAnswer.map((answer, index) => {
                 console.log("Answer is:", answer);
-                return <SabioAnswer key={index} answer={answer} />;
+                return <StackOverflowResult key={index} answer={answer} />;
               })}
             </Stack>
           )}

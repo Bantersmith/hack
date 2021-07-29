@@ -11,6 +11,7 @@ export const StackOverflowResult: React.FC<StackOverflowResultProps> = ({
   answer,
 }) => {
   return (
+    answer && (
     <Box
       key={answer.imageAlt}
       maxW="xxl"
@@ -74,5 +75,6 @@ export const StackOverflowResult: React.FC<StackOverflowResultProps> = ({
         </Box>
       </Box>
     </Box>
+    )
   );
 };
