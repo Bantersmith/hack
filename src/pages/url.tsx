@@ -34,7 +34,7 @@ const url = () => {
   };
 
   return (
-    <Layout>
+    <Layout >
       <Formik
         validateOnChange={false}
         validateOnBlur={false}
@@ -43,8 +43,8 @@ const url = () => {
         onSubmit={onSubmit}
       >
         {({ isSubmitting }) => (
-          <Form>
-            <Box mt={4}>
+          <Form >
+            <Box mt={4} ml="96" mr="96">
               <InputField
                 color="black"
                 name="url"
@@ -53,7 +53,7 @@ const url = () => {
                 type="outline"
               />
             </Box>
-            <Box mt={4}>
+            <Box mt={4} ml="96" mr="96">
               <InputField
                 color="black"
                 name="slug"
@@ -64,6 +64,7 @@ const url = () => {
             </Box>
             <Button
               mt={4}
+              ml = "96"
               type="submit"
               isLoading={isSubmitting}
               bgColor="#FBFBB3"

@@ -9,7 +9,7 @@ const singleQuestion = (question) => {
           {question}
         </Text>
         <Spacer></Spacer>     
-        <Button size="sm" bgColor="#9FC6F6" textColor="#10006B">Ask this</Button>
+        <Button size="xs" bgColor="#9FC6F6" textColor="#10006B">Ask this</Button>
       </Stack>
     </Box>
   );
@@ -28,9 +28,9 @@ export const TopFive: React.FC<any> = ({ questions }) => {
   }
 
   return (
-    <Box bottom="0" right="30">
-      <Heading pb="6">Top Five</Heading>
-      <Stack spacing={0}>{renderedAnswers}</Stack>
+    <Box>
+      <Heading color="#10006B" size="md" pb="2">Top Five Asked Questions</Heading>
+      <Stack fontSize="sm" spacing={0}>{renderedAnswers}</Stack>
     </Box>
   );
 };

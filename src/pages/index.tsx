@@ -16,9 +16,36 @@ import { Layout } from "../components/Layout";
 import { SabioAnswer } from "../components/results/SabioAnswer";
 import { EmptyResult } from "../components/results/EmptyResult";
 import { ISabioAnswer } from "../types/types";
+<<<<<<< HEAD
+import { TopFive } from "../components/results/TopFive";
+import { RecentQuestions } from "../components/results/RecentQuestions";
+=======
+>>>>>>> develop
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
+
+  export async function getServerSideProps(context) {
+    const top5response = await fetch(`https://intent.davidwalker.dev/stats/top/5`, {
+      method: "GET",
+    });
+  
+    const questions = await top5response.json();
+    console.log("Data:", questions);
+
+    const recentResponse = await fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
+      method: "GET",
+    });
+  
+    const recents = await recentResponse.json();
+    console.log("recents:", recents);
+  
+    return {
+      props: {questions,recents}, // will be passed to the page component as props
+    }
+
+
+  };
 
 const getSearch = async (term) => {
   const response = await fetch(
@@ -32,7 +59,9 @@ const getSearch = async (term) => {
   return searchResult;
 };
 
-const Index = () => {
+
+
+const Index = (questions,recents) => {
   let sabioAnswerArr: any = [];
   let stackAnswerArr: any = [];
   let confAnswerArr: any = [];
@@ -46,6 +75,8 @@ const Index = () => {
   const initialValues = {
     search: "",
   };
+
+
   const validationSchema = Yup.object({
     search: Yup.string().required(),
   });
@@ -68,10 +99,11 @@ const Index = () => {
     setSubmitted(true);
     setSubmitting(false);
   };
+  
 
   return (
     <Layout>
-      <Box align="center" p={4}>
+      <Box align="centre" p={4}>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -114,6 +146,26 @@ const Index = () => {
           )}
         </Formik>
       </Box>
+      <Stack direction ="row">
+        <Stack> 
+        <Box>
+          <TopFive questions={ questions.questions } />
+        </Box>
+        <Box>
+          <RecentQuestions questions={ questions.questions } />
+        </Box>
+        </Stack>
+        <Box>
+          {sabioAnswer.length > 0 &&
+            submitted &&
+            sabioAnswer[0].intent != "Default Fallback Intent" && (
+              <Stack textColor="#10006B">
+                {sabioAnswer.map((answer, index) => {
+                  console.log("Answer is:", answer);
+                  return <AnswerResult key={index} answer={answer} />;
+                })}
+              </Stack>
+            )}
 
       {sabioAnswer.length > 0 &&
         submitted &&
@@ -126,10 +178,14 @@ const Index = () => {
           </Stack>
         )}
 
-      {sabioAnswer.length == 0 && submitted && <EmptyResult />}
-      {sabioAnswer.length > 0 &&
-        submitted &&
-        sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
+          {stackAnswer.length > 0 && submitted && (
+            <Stack textColor="#10006B">
+              {stackAnswer.map((answer, index) => {
+                console.log("Answer is:", answer);
+                return <AnswerResult key={index} answer={answer} />;
+              })}
+            </Stack>
+          )}
 
       {stackAnswer.length > 0 && submitted && (
         <Stack textColor="#10006B">
