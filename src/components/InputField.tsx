@@ -29,9 +29,9 @@ export const InputField: React.FC<InputFieldProps> = ({
   const [field, { error }] = useField(props);
 
   return (
-    <FormControl isInvalid={!!error} color="white">
+    <FormControl isInvalid={!!error} color="black">
       <FormLabel htmlFor={field.name}>{label}</FormLabel>
-      <InputOrTextArea {...field} {...props} id={field.name} />
+      <InputOrTextArea {...field} {...props} id={field.name} bg="white:200" />
       {error ? <FormErrorMessage>{error}</FormErrorMessage> : null}
     </FormControl>
   );

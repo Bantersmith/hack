@@ -3,8 +3,19 @@ import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
+import * as Yup from "yup";
 
 const url = () => {
+  const validationSchema = Yup.object({
+    url: Yup.string()
+      .matches(
+        /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
+        "Enter correct url!"
+      )
+      .required("Please enter website"),
+    slug: Yup.string().required(),
+  });
+
   const onSubmit = async (
     values: any,
     { setSubmitting, setErrors, setStatus, resetForm }: any
@@ -27,6 +38,7 @@ const url = () => {
       <Formik
         validateOnChange={false}
         validateOnBlur={false}
+        validationSchema={validationSchema}
         initialValues={{ url: "", slug: "" }}
         onSubmit={onSubmit}
       >
@@ -34,17 +46,19 @@ const url = () => {
           <Form>
             <Box mt={4}>
               <InputField
+                color="black"
                 name="url"
-                placeholder="URL"
-                label="url"
-                type="text"
+                placeholder="https://www.example.com"
+                label="Url"
+                type="outline"
               />
             </Box>
             <Box mt={4}>
               <InputField
+                color="black"
                 name="slug"
                 placeholder="Slug"
-                label="slug"
+                label="Slug"
                 type="text"
               />
             </Box>
