@@ -15,9 +15,10 @@ import * as Yup from "yup";
 import { Layout } from "../components/Layout";
 import { SabioAnswer } from "../components/results/SabioAnswer";
 import { EmptyResult } from "../components/results/EmptyResult";
-import { SabioAnswer } from "../types/types";
+import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
+import { StackOverflowResult } from "../components/results/StackOverflowResult";
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
@@ -143,14 +144,15 @@ const Index = (questions,recents) => {
           )}
         </Formik>
       </Box>
+
       <Stack direction ="row">
         <Stack> 
-        <Box>
-          <TopFive questions={ questions.questions } />
-        </Box>
-        <Box>
-          <RecentQuestions questions={ questions.questions } />
-        </Box>
+          <Box>
+            <TopFive questions={ questions.questions } />
+          </Box>
+          <Box>
+            <RecentQuestions questions={ questions.questions } />
+          </Box>
         </Stack>
         <Box>
           {sabioAnswer.length > 0 &&
@@ -159,48 +161,39 @@ const Index = (questions,recents) => {
               <Stack textColor="#10006B">
                 {sabioAnswer.map((answer, index) => {
                   console.log("Answer is:", answer);
-                  return <AnswerResult key={index} answer={answer} />;
+                  return <SabioAnswer key={index} answer={answer} />;
                 })}
               </Stack>
             )}
 
-      {sabioAnswer.length > 0 &&
-        submitted &&
-        sabioAnswer[0].intent != "Default Fallback Intent" && (
-          <Stack textColor="#10006B">
-            {sabioAnswer.map((answer, index) => {
-              console.log("Answer is:", answer);
-              return <SabioAnswer key={index} answer={answer} />;
-            })}
-          </Stack>
-        )}
+              {stackAnswer.length > 0 && submitted && (
+                <Stack textColor="#10006B">
+                  {stackAnswer.map((answer, index) => {
+                    console.log("Answer is:", answer);
+                    return <StackOverflowResult key={index} answer={answer} />;
+                  })}
+                </Stack>
+              )}
 
           {stackAnswer.length > 0 && submitted && (
             <Stack textColor="#10006B">
               {stackAnswer.map((answer, index) => {
                 console.log("Answer is:", answer);
-                return <AnswerResult key={index} answer={answer} />;
+                return <SabioAnswer key={index} answer={answer} />;
               })}
             </Stack>
           )}
 
-      {stackAnswer.length > 0 && submitted && (
-        <Stack textColor="#10006B">
-          {stackAnswer.map((answer, index) => {
-            console.log("Answer is:", answer);
-            return <SabioAnswer key={index} answer={answer} />;
-          })}
-        </Stack>
-      )}
-
-      {confAnswer.length > 0 && submitted && (
-        <Stack textColor="#10006B">
-          {confAnswer.map((answer, index) => {
-            console.log("Answer is:", answer);
-            return <SabioAnswer key={index} answer={answer} />;
-          })}
-        </Stack>
-      )}
+          {confAnswer.length > 0 && submitted && (
+            <Stack textColor="#10006B">
+              {confAnswer.map((answer, index) => {
+                console.log("Answer is:", answer);
+                return <SabioAnswer key={index} answer={answer} />;
+              })}
+            </Stack>
+          )}
+          </Box>
+      </Stack>
     </Layout>
   );
 };
