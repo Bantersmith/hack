@@ -20,24 +20,28 @@ import { SabioAnswer } from "../types/types";
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
 
-const Index = () => {
-  const sabioAnswers: [SabioAnswer] = [
+const getSearch = async (term) => {
+  const response = await fetch(
+    `https://intent.davidwalker.dev/detectIntent?search=${term}`,
     {
-      title: "Resetting your password",
-      detail: "To reset your password you need to go to the url below.",
-      imageUrl: "",
-      urls: [
-        {
-          title: "Password reset",
-          url: "https://thesab.io/password",
-        },
-      ],
-    },
-  ];
+      method: "GET",
+    }
+  );
 
-  const [resultMessage, setResultMessage] = useState<SabioAnswer[]>([]);
+  const searchResult = await response.json();
+  return searchResult;
+};
+
+const Index = () => {
+  let sabioAnswerArr: any = [];
+  let stackAnswerArr: any = [];
+  let confAnswerArr: any = [];
+
+  const [sabioAnswer, setSabioAnswer] = useState<SabioAnswer[]>([]);
+  const [confAnswer, setConfAnswer] = useState<SabioAnswer[]>([]);
+  const [stackAnswer, setStackAnswer] = useState<SabioAnswer[]>([]);
+
   const [submitted, setSubmitted] = useState(false);
-  const resultImg = "./images/stackoverflow.PNG"
 
   const initialValues = {
     search: "",
@@ -46,26 +50,23 @@ const Index = () => {
     search: Yup.string().required(),
   });
 
-  const sleep = (ms: number | undefined) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  const onSubmit = (
+  const onSubmit = async (
     values: any,
     { setSubmitting, setErrors, setStatus, resetForm }: any
   ) => {
     setSubmitted(false);
-    sleep(2000).then(() => {
-      console.log(JSON.stringify(values, null, 2));
+    const answers = await getSearch(values.search);
+    console.log("Answers:", answers);
+    sabioAnswerArr.push(answers.dialogflowResponse);
+    stackAnswerArr.push(answers.stackoverflowResponse);
+    confAnswerArr.push(answers.confluenceResponse);
 
-      //Do some API call here
-
-      //Set the resutls
-      setResultMessage(sabioAnswers);
-      setSubmitted(true);
-      setSubmitting(false);
-    });
-
-    
+    //Set the resutls
+    setSabioAnswer(sabioAnswerArr);
+    setStackAnswer(stackAnswerArr);
+    setConfAnswer(confAnswerArr);
+    setSubmitted(true);
+    setSubmitting(false);
   };
 
   return (
@@ -114,18 +115,39 @@ const Index = () => {
         </Formik>
       </Box>
 
-      {resultMessage.length > 0 && submitted && (
-          <Stack textColor="#10006B">          
-            {resultMessage.map((answer, index) => {
+      {sabioAnswer.length > 0 &&
+        submitted &&
+        sabioAnswer[0].intent != "Default Fallback Intent" && (
+          <Stack textColor="#10006B">
+            {sabioAnswer.map((answer, index) => {
+              console.log("Answer is:", answer);
               return <AnswerResult key={index} answer={answer} />;
             })}
-            {/* <Box w="120px" pl="6">
-              <Img src={resultImg} alt="Sabio"/>
-            </Box>   */}
           </Stack>
+        )}
 
+      {sabioAnswer.length == 0 && submitted && <EmptyResult />}
+      {sabioAnswer.length > 0 &&
+        submitted &&
+        sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
+
+      {stackAnswer.length > 0 && submitted && (
+        <Stack textColor="#10006B">
+          {stackAnswer.map((answer, index) => {
+            console.log("Answer is:", answer);
+            return <AnswerResult key={index} answer={answer} />;
+          })}
+        </Stack>
       )}
-      {resultMessage.length == 0 && submitted && <EmptyResult />}
+
+      {confAnswer.length > 0 && submitted && (
+        <Stack textColor="#10006B">
+          {confAnswer.map((answer, index) => {
+            console.log("Answer is:", answer);
+            return <AnswerResult key={index} answer={answer} />;
+          })}
+        </Stack>
+      )}
     </Layout>
   );
 };
