@@ -2,7 +2,6 @@ import { SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
-  Img,
   Input,
   InputGroup,
   InputLeftElement,
@@ -13,12 +12,12 @@ import { Field, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Layout } from "../components/Layout";
-import { SabioAnswer } from "../components/results/SabioAnswer";
 import { EmptyResult } from "../components/results/EmptyResult";
+import { SabioAnswer } from "../components/results/SabioAnswer";
+import { StackOverflowAnswer } from "../components/results/StackOverflowAnswer";
 import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
-import { StackOverflowResult } from "../components/results/StackOverflowResult";
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
@@ -171,14 +170,14 @@ const Index = (questions,recents) => {
             submitted &&
             sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
 
-          {stackAnswer.length > 0 && submitted && (
-            <Stack textColor="#10006B">
-              {stackAnswer.map((answer, index) => {
-                console.log("Answer is:", answer);
-                return <StackOverflowResult key={index} answer={answer} />;
-              })}
-            </Stack>
-          )}
+      {stackAnswer.length > 0 && submitted && (
+        <Stack textColor="#10006B">
+          {stackAnswer.map((answer, index) => {
+            console.log("Answer is:", answer);
+            return <StackOverflowAnswer key={index} answer={answer} />;
+          })}
+        </Stack>
+      )}
 
           {confAnswer.length > 0 && submitted && (
             <Stack textColor="#10006B">
