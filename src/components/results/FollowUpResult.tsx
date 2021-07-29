@@ -42,7 +42,6 @@ export const FollowUpResult: React.FC<FollowUpResultProps> = ({
           fontWeight="semibold"
           as="h4"
           lineHeight="tight"
-          isTruncated
         >
           {answer.title}
         </Box>
