@@ -1,22 +1,12 @@
-import { ExternalLinkIcon, StarIcon } from "@chakra-ui/icons";
-import {
-  Badge,
-  Box,
-  Button,
-  Image,
-  Img,
-  Link,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Box, Heading, Image, Img, Link, Stack, Text } from "@chakra-ui/react";
 import React from "react";
-import { SabioAnswer } from "../../types/types";
 
-interface AnswerResultProps {
-  answer: SabioAnswer;
+interface StackOverflowAnswerProps {
+  answer?: any;
 }
 
-export const AnswerResult: React.FC<AnswerResultProps> = ({
+export const StackOverflowAnswer: React.FC<StackOverflowAnswerProps> = ({
   children,
   answer,
 }) => {
@@ -29,6 +19,9 @@ export const AnswerResult: React.FC<AnswerResultProps> = ({
         borderRadius="lg"
         overflow="hidden"
       >
+        <Heading p={6} size="s">
+          Possible Stack Overflow Answer
+        </Heading>
         {answer.imageUrl && (
           <Image src={answer.imageUrl} maxH={"100px"} minW={"100%"} />
         )}
@@ -42,23 +35,13 @@ export const AnswerResult: React.FC<AnswerResultProps> = ({
           >
             <Stack direction="row">
               <Box w="50px">
-                <Img src="./images/sabio.PNG" alt="Sabio" />
+                <Img src="./images/stackoverflow.PNG" alt="StackOverflow" />
               </Box>
               <Text fontSize="2xl">{answer.title}</Text>
             </Stack>
           </Box>
         </Box>
-        <Box pl="6" pr="6">
-          <Box
-            mt="1"
-            fontWeight="semibold"
-            as="h4"
-            lineHeight="tight"
-            isTruncated
-          >
-            {answer.detail}
-          </Box>
-        </Box>
+        <Box pl="6" pr="6"></Box>
         {answer.urls?.map((url) => {
           return (
             <Box p="6" key={url.title}>
