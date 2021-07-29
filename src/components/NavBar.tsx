@@ -1,5 +1,4 @@
 import { Box, Flex, Link } from "@chakra-ui/layout";
-import { Link as ReachLink } from "@reach/router";
 import { Img, Spacer } from "@chakra-ui/react";
 import React from "react";
 
@@ -20,6 +19,11 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
           <Box w="150px" mt="6">
             <Link href="/url" color="white">
               URL Shorten
+            </Link>
+          </Box>
+          <Box w="150px" mt="6">
+            <Link href="/topFive" color="white">
+              FAQ's
             </Link>
           </Box> 
         <Box ml={"auto"}>{body}</Box>

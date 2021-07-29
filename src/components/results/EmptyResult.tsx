@@ -18,9 +18,10 @@ export const EmptyResult: React.FC<EmptyResultProps> = ({
       overflow="hidden"
     >
       <Image
+        ml="6"
         src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_487063216_162506.jpg"
         maxH={"100px"}
-        minW={"100%"}
+        minW={"20%"}
       />
 
       <Box p="6">
