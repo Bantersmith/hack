@@ -21,6 +21,7 @@ const shortUrl = () => {
     );
 
     getUrl(slug).then((url) => {
+      console.log("url", url);
       if (url.startsWith("http")) {
         router.push(url);
       } else {

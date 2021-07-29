@@ -13,9 +13,9 @@ import { Field, Formik } from "formik";
 import React, { useState } from "react";
 import * as Yup from "yup";
 import { Layout } from "../components/Layout";
-import { AnswerResult } from "../components/results/AnswerResult";
+import { SabioAnswer } from "../components/results/SabioAnswer";
 import { EmptyResult } from "../components/results/EmptyResult";
-import { SabioAnswer } from "../types/types";
+import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
 
@@ -63,9 +63,9 @@ const Index = (questions,recents) => {
   let stackAnswerArr: any = [];
   let confAnswerArr: any = [];
 
-  const [sabioAnswer, setSabioAnswer] = useState<SabioAnswer[]>([]);
-  const [confAnswer, setConfAnswer] = useState<SabioAnswer[]>([]);
-  const [stackAnswer, setStackAnswer] = useState<SabioAnswer[]>([]);
+  const [sabioAnswer, setSabioAnswer] = useState<ISabioAnswer[]>([]);
+  const [confAnswer, setConfAnswer] = useState<ISabioAnswer[]>([]);
+  const [stackAnswer, setStackAnswer] = useState<ISabioAnswer[]>([]);
 
   const [submitted, setSubmitted] = useState(false);
 
@@ -164,10 +164,16 @@ const Index = (questions,recents) => {
               </Stack>
             )}
 
-          {sabioAnswer.length == 0 && submitted && <EmptyResult />}
-          {sabioAnswer.length > 0 &&
-            submitted &&
-            sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
+      {sabioAnswer.length > 0 &&
+        submitted &&
+        sabioAnswer[0].intent != "Default Fallback Intent" && (
+          <Stack textColor="#10006B">
+            {sabioAnswer.map((answer, index) => {
+              console.log("Answer is:", answer);
+              return <SabioAnswer key={index} answer={answer} />;
+            })}
+          </Stack>
+        )}
 
           {stackAnswer.length > 0 && submitted && (
             <Stack textColor="#10006B">
@@ -178,16 +184,23 @@ const Index = (questions,recents) => {
             </Stack>
           )}
 
-          {confAnswer.length > 0 && submitted && (
-            <Stack textColor="#10006B">
-              {confAnswer.map((answer, index) => {
-                console.log("Answer is:", answer);
-                return <AnswerResult key={index} answer={answer} />;
-              })}
-            </Stack>
-          )}
-        </Box>
-      </Stack>
+      {stackAnswer.length > 0 && submitted && (
+        <Stack textColor="#10006B">
+          {stackAnswer.map((answer, index) => {
+            console.log("Answer is:", answer);
+            return <SabioAnswer key={index} answer={answer} />;
+          })}
+        </Stack>
+      )}
+
+      {confAnswer.length > 0 && submitted && (
+        <Stack textColor="#10006B">
+          {confAnswer.map((answer, index) => {
+            console.log("Answer is:", answer);
+            return <SabioAnswer key={index} answer={answer} />;
+          })}
+        </Stack>
+      )}
     </Layout>
   );
 };
