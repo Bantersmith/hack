@@ -10,19 +10,22 @@ export const Wrapper: React.FC<WrapperProps> = ({
   variant = "regular",
 }) => {
   return (
-    <Box
-      mt={4}
-      mx="auto"
-      maxW={variant === "regular" ? "1500px" : "800px"}
-      w="100%"
-      p={4}
-    >
-      {children}
-      <Spacer />
-      <Box width="300px" ml="80%">
-        <Img src="./images/robot2.PNG" alt="Sabio Logo"/>
-      </Box>      
-    </Box>
-
+    <Flex wrap={{sm: "wrap", "2xl": "nowrap"}}>
+      <Box
+        mt={4}
+        mx="auto"
+        maxW={variant === "regular" ? "1500px" : "800px"}
+        w="100%"
+        p={4}
+      >
+        {children}
+      </Box>
+      <Img
+        src="./images/robot2.PNG"
+        boxSize="300px"
+        alt="Sabio Logo"
+        m={{sm: "auto", "2xl": "32px 32px 0 0"}}
+      />
+    </Flex>
   );
 };

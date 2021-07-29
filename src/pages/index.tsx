@@ -18,6 +18,7 @@ import { StackOverflowAnswer } from "../components/results/StackOverflowAnswer";
 import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
+import Head from "next/head"
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
@@ -48,8 +49,6 @@ const getSearch = async (term) => {
   return searchResult;
 };
 
-
-
 const Index = (props) => {
   let sabioAnswerArr: any = [];
   let stackAnswerArr: any = [];
@@ -64,7 +63,6 @@ const Index = (props) => {
   const initialValues = {
     search: "",
   };
-
 
   const validationSchema = Yup.object({
     search: Yup.string().required(),
@@ -88,11 +86,13 @@ const Index = (props) => {
     setSubmitted(true);
     setSubmitting(false);
   };
-  
 
   return (
     <Layout>
-      <Box align="centre" p={4}>
+      <Head>
+        <title>Onboardabot</title>
+      </Head>
+      <Box p={4}>
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
@@ -114,9 +114,10 @@ const Index = (props) => {
                   type="text"
                   name="search"
                   placeholder="What do you want to know"
+                  id="inputBox"
                 />
                 <InputLeftElement>
-                  <SearchIcon></SearchIcon>
+                  <SearchIcon />
                 </InputLeftElement>
                 <InputRightElement width="4.5rem">
                   <Button
@@ -136,14 +137,10 @@ const Index = (props) => {
         </Formik>
       </Box>
 
-      <Stack direction ="row">
+      <Stack direction ="row" ml="4">
         <Stack> 
-          <Box>
-            <TopFive questions={ props.questions } />
-          </Box>
-          <Box>
-            <RecentQuestions questions={ props.recents } />
-          </Box>
+          <TopFive questions={props.questions} />
+          <RecentQuestions questions={props.recents} />
         </Stack>
         <Box>
             {sabioAnswer.length > 0 &&
