@@ -9,21 +9,22 @@ const singleQuestion = (question) => {
           {question}
         </Text>
         <Spacer></Spacer>     
-        <Button size="sm" bgColor="#9FC6F6" textColor="#10006B">Ask this</Button>
+        <Button size="xs" bgColor="#9FC6F6" textColor="#10006B">Ask this</Button>
       </Stack>
     </Box>
   );
 };
 
 export const RecentQuestions: React.FC<any> = ({ questions }) => {
+  console.log(questions)
   const renderedAnswers = questions.map((question) => {
     return singleQuestion(question.friendlyName);
   });
 
   return (
-    <Box bottom="0" right="30">
-      <Heading pb="6">Recently Asked</Heading>
-      <Stack spacing={0}>{renderedAnswers}</Stack>
+    <Box>
+      <Heading color="#10006B" size="md" pb="2">Recently Asked Questions</Heading>
+      <Stack fontSize="sm" spacing={0}>{renderedAnswers}</Stack>
     </Box>
   );
 };
