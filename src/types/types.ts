@@ -1,21 +1,21 @@
-interface Url {
+interface IUrl {
   title: string;
   url: string;
 }
 
-interface Action {
+interface IAction {
   title: string;
   method: string;
   url: string;
   body: any;
 }
 
-export interface SabioAnswer {
+export interface ISabioAnswer {
   sessionId: string;
   title: string;
   detail: string;
   intent: string;
   imageUrl?: string;
-  urls?: [Url];
-  actions?: [Action];
+  urls?: [IUrl];
+  actions?: [IAction];
 }
