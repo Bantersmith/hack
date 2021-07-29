@@ -11,8 +11,10 @@ interface Action {
 }
 
 export interface SabioAnswer {
+  sessionId: string;
   title: string;
   detail: string;
+  intent: string;
   imageUrl?: string;
   urls?: [Url];
   actions?: [Action];

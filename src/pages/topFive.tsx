@@ -2,21 +2,27 @@ import React from "react";
 import { Layout } from "../components/Layout";
 import { TopFive } from "../components/results/TopFive";
 
-const topFive = () => {
-  //Get these via API call to search API
-  const topFive = [
-    { question: "How do i reset my password?" },
-    { question: "Maven Issues" },
-    { question: "How do i Book a holiday?" },
-    { question: "How do i Conact Helpdesk?" },
-    { question: "Can i install node?" },
-  ];
+export async function getStaticProps(context) {
+  const response = await fetch(`https://intent.davidwalker.dev/stats/top/5`, {
+    method: "GET",
+  });
 
+  const questions = await response.json();
+  console.log("Data:", questions);
+
+  return {
+    props: {questions}, // will be passed to the page component as props
+  }
+};
+
+
+
+const topFive = (questions) => {
   return (
     <Layout>
-      <TopFive questions={topFive} />
+      <TopFive questions={ questions.questions } />
     </Layout>
   );
-};
+}
 
 export default topFive;

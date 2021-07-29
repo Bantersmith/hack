@@ -16,9 +16,16 @@ const singleQuestion = (question) => {
 };
 
 export const TopFive: React.FC<any> = ({ questions }) => {
-  const renderedAnswers = questions.map((question) => {
-    return singleQuestion(question.question);
+
+
+  console.log("questions", questions)
+  let renderedAnswers: any
+
+  if(typeof questions !== 'undefined') {
+    renderedAnswers = questions.map((question) => {
+    return singleQuestion(question.friendlyName);
   });
+  }
 
   return (
     <Box bottom="0" right="30">
