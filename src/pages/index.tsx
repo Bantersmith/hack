@@ -18,7 +18,6 @@ import { StackOverflowAnswer } from "../components/results/StackOverflowAnswer";
 import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
-import { StackOverflowResult } from "../components/results/StackOverflowResult";
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
@@ -155,7 +154,7 @@ const Index = (questions,recents) => {
           </Box>
         </Stack>
         <Box>
-          {sabioAnswer.length > 0 &&
+            {sabioAnswer.length > 0 &&
             submitted &&
             sabioAnswer[0].intent != "Default Fallback Intent" && (
               <Stack textColor="#10006B">
@@ -167,9 +166,9 @@ const Index = (questions,recents) => {
             )}
 
           {sabioAnswer.length == 0 && submitted && <EmptyResult />}
-      {sabioAnswer.length > 0 &&
-        submitted &&
-        sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
+          {sabioAnswer.length > 0 &&
+            submitted &&
+            sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
 
       {stackAnswer.length > 0 && submitted && (
         <Stack textColor="#10006B">
