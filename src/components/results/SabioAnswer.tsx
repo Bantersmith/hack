@@ -10,13 +10,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { SabioAnswer } from "../../types/types";
+import { ISabioAnswer } from "../../types/types";
 
 interface AnswerResultProps {
-  answer: SabioAnswer;
+  answer: ISabioAnswer;
 }
 
-export const AnswerResult: React.FC<AnswerResultProps> = ({
+export const SabioAnswer: React.FC<AnswerResultProps> = ({
   children,
   answer,
 }) => {
