@@ -5,10 +5,18 @@ import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
 
 const url = () => {
-  const onSubmit = (
+  const onSubmit = async (
     values: any,
     { setSubmitting, setErrors, setStatus, resetForm }: any
   ) => {
+    const response = await fetch(`https://url.davidwalker.dev/${values.slug}`, {
+      method: "POST",
+      mode: "cors",
+      body: `${values.url}`,
+    });
+
+    const data = await response.text();
+    console.log("Data:", data);
     console.log(JSON.stringify(values, null, 2));
     setSubmitting(false);
     resetForm();
@@ -33,7 +41,12 @@ const url = () => {
               />
             </Box>
             <Box mt={4}>
-              <InputField name="slug" placeholder="Slug" label="slug" type="text" />
+              <InputField
+                name="slug"
+                placeholder="Slug"
+                label="slug"
+                type="text"
+              />
             </Box>
             <Button
               mt={4}
