@@ -58,7 +58,8 @@ const url = () => {
         isClosable: true,
         render: () => (
             <Box color="white" p={3} bg="red">
-              Error
+              Error<br/>
+              {data}
             </Box>
         )
       } )
