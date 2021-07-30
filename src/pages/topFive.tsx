@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout } from "../components/Layout";
 import { TopFive } from "../components/results/TopFive";
+import Head from "next/head"
 
 export async function getStaticProps(context) {
   const response = await fetch(`https://intent.davidwalker.dev/stats/top/5`, {
@@ -20,6 +21,9 @@ export async function getStaticProps(context) {
 const topFive = (questions) => {
   return (
     <Layout>
+      <Head>
+        <title>FAQs</title>
+      </Head>
       <TopFive questions={ questions.questions } />
     </Layout>
   );

@@ -24,57 +24,46 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
     answer && (
       <Box
         key={answer.detail}
-        maxW="xxl"
-        borderWidth="1px"
-        borderRadius="lg"
-        overflow="hidden"
       >
         {answer.imageUrl && (
-          <Image
-              objectFit="cover"
-              src={answer.imageUrl} maxH={"100px"} minW={"100%"} />
+          <Image src={answer.imageUrl} h="50px" />
         )}
-        <Box p="6">
+        <Box p={{base: "8px 0", "md": "4"}}>
           <Box
             mt="1"
             fontWeight="semibold"
             as="h1"
             lineHeight="tight"
-            alignItems="center"
-            isTruncated
           >
             <Stack direction="row">
-              <Box w="50px">
-                <Img src="./images/sabio.PNG" alt="Sabio" />
-              </Box>
-              <Text fontSize="2xl" padding="2">{answer.title}</Text>
+              <Img src="./images/sabio.PNG" alt="Sabio" h="50px" />
+              <Text fontSize="xl">{answer.title}</Text>
             </Stack>
           </Box>
         </Box>
-        <Box pl="6" pr="6">
+        <Box pl={{base: "0", "md": "4"}} pr={{base: "0", "md": "4"}}>
           <Box
             mt="1"
             fontWeight="semibold"
             as="h4"
             lineHeight="tight"
-            maxW="800"
           >
             {answer.detail}
           </Box>
         </Box>
         {answer.urls?.map((url) => {
           return (
-            <Box p="6" key={url.title}>
+            <Box p={{base: "8px 0", "md": "4"}} key={url.title}>
               <Box
                 mt="1"
                 fontWeight="semibold"
                 as="h4"
                 lineHeight="tight"
-                isTruncated
               >
                 <Text>
-                  <Link href={url.url} isExternal color="#F49A74">
-                    {url.title}
+                  {url.title + ": "}
+                  <Link href={url.url} isExternal color="#F49A74" wordBreak="break-all">
+                    {url.url.substr(url.url.indexOf("//") + 2)}
                     <ExternalLinkIcon mx="2px" />
                   </Link>
                 </Text>

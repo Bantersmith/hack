@@ -43,7 +43,6 @@ export const StackOverflowResult: React.FC<StackOverflowResultProps> = ({
           fontWeight="semibold"
           as="h4"
           lineHeight="tight"
-          isTruncated
         >
           <Stack direction="row">
             <Box w="50px">

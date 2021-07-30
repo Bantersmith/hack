@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
 import * as Yup from "yup";
+import Head from "next/head"
 
 const url = () => {
   const validationSchema = Yup.object({
@@ -35,6 +36,9 @@ const url = () => {
 
   return (
     <Layout >
+      <Head>
+        <title>URL Shortner</title>
+      </Head>
       <Formik
         validateOnChange={false}
         validateOnBlur={false}

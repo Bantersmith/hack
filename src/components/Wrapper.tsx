@@ -1,28 +1,19 @@
 import { Box, Spacer, Flex } from "@chakra-ui/layout";
 import React from "react";
-import {Img} from "@chakra-ui/react";
-interface WrapperProps {
-  variant?: any;
-}
+import { Img } from "@chakra-ui/react";
 
-export const Wrapper: React.FC<WrapperProps> = ({
-  children,
-  variant = "regular",
-}) => {
+export const Wrapper: React.FC<any> = ({ children }) => {
   return (
-    <Box
-      mt={4}
-      mx="auto"
-      maxW={variant === "regular" ? "1500px" : "800px"}
-      w="100%"
-      p={4}
-    >
-      {children}
-      <Spacer />
-      <Box width="300px" ml="80%">
-        <Img src="./images/robot2.PNG" alt="Sabio Logo"/>
-      </Box>      
-    </Box>
-
+    <Flex>
+      <Box mt={4} mx={{ base: "4", md: "8" }} maxW="1500px" w="100%">
+        {children}
+      </Box>
+      <Img
+        src="./images/robot2.PNG"
+        boxSize="300px"
+        alt="Sabio Logo"
+        d={{ base: "none", "2xl": "block" }}
+      />
+    </Flex>
   );
 };
