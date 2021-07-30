@@ -8,15 +8,20 @@ const singleQuestion = (question) => {
         <Text p="2" pl="0">
           {question}
         </Text>
-        <Spacer></Spacer>     
-        <Button size="xs" bgColor="#9FC6F6" textColor="#10006B">Ask this</Button>
+        <Spacer />
+        <Button
+          size="xs"
+          bgColor="#9FC6F6"
+          textColor="#10006B"
+          minW="64px">
+            Ask this
+        </Button>
       </Stack>
     </Box>
   );
 };
 
 export const RecentQuestions: React.FC<any> = ({ questions }) => {
-  console.log(questions)
   const renderedAnswers = questions.map((question) => {
     return singleQuestion(question.friendlyName);
   });

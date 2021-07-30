@@ -18,31 +18,24 @@ import { StackOverflowAnswer } from "../components/results/StackOverflowAnswer";
 import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
+import Head from "next/head"
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
 
-  export async function getServerSideProps(context) {
-    const top5response = await fetch(`https://intent.davidwalker.dev/stats/top/5`, {
-      method: "GET",
-    });
-  
-    const questions = await top5response.json();
-    console.log("Data:", questions);
-
-    const recentResponse = await fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
-      method: "GET",
-    });
-  
-    const recents = await recentResponse.json();
-    console.log("recents:", recents);
-  
-    return {
-      props: {questions,recents}, // will be passed to the page component as props
-    }
-
-
-  };
+  export async function getServerSideProps() {
+    const [top5response, recentResponse] = await Promise.all([
+      fetch(`https://intent.davidwalker.dev/stats/top/5`, {
+      method: "GET"}), 
+      fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
+      method: "GET"}), 
+    ]);
+    const [questions, recents] = await Promise.all([
+      top5response.json(), 
+      recentResponse.json()
+    ]);
+    return { props: { questions, recents } };
+  }
 
 const getSearch = async (term) => {
   const response = await fetch(
@@ -56,9 +49,7 @@ const getSearch = async (term) => {
   return searchResult;
 };
 
-
-
-const Index = (questions,recents) => {
+const Index = (props) => {
   let sabioAnswerArr: any = [];
   let stackAnswerArr: any = [];
   let confAnswerArr: any = [];
@@ -72,7 +63,6 @@ const Index = (questions,recents) => {
   const initialValues = {
     search: "",
   };
-
 
   const validationSchema = Yup.object({
     search: Yup.string().required(),
@@ -96,98 +86,97 @@ const Index = (questions,recents) => {
     setSubmitted(true);
     setSubmitting(false);
   };
-  
 
   return (
     <Layout>
-      <Box align="centre" p={4}>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onSubmit}
-          validationSchema={validationSchema}
-        >
-          {({ handleSubmit, values, errors, isSubmitting }) => (
-            <Box
-              maxWidth={800}
-              p={6}
-              m="10px auto"
-              as="form"
-              onSubmit={handleSubmit as any}
-            >
-              <InputGroup size="md">
-                <Input
-                  as={Field}
-                  variant="flushed"
-                  pr="4.5rem"
-                  type="text"
-                  name="search"
-                  placeholder="What do you want to know"
-                />
-                <InputLeftElement>
-                  <SearchIcon></SearchIcon>
-                </InputLeftElement>
-                <InputRightElement width="4.5rem">
-                  <Button
-                    color="black"
-                    bgColor="#FBFBB3"
-                    h="1.75rem"
-                    size="md"
-                    type="submit"
-                    isLoading={isSubmitting}
-                  >
-                    Search
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </Box>
-          )}
-        </Formik>
-      </Box>
-
+      <Head>
+        <title>Onboardabot</title>
+      </Head>
       <Stack direction ="row">
-        <Stack> 
-          <Box>
-            <TopFive questions={ questions.questions } />
-          </Box>
-          <Box>
-            <RecentQuestions questions={ questions.questions } />
-          </Box>
+        <Stack d={{base: "none", "xl": "block"}}> 
+          <TopFive questions={props.questions} />
+          <RecentQuestions questions={props.recents} />
         </Stack>
-        <Box>
-            {sabioAnswer.length > 0 &&
-            submitted &&
-            sabioAnswer[0].intent != "Default Fallback Intent" && (
-              <Stack textColor="#10006B">
-                {sabioAnswer.map((answer, index) => {
-                  console.log("Answer is:", answer);
-                  return <SabioAnswer key={index} answer={answer} />;
-                })}
-              </Stack>
+        <Box w="100%">
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+          >
+            {({ handleSubmit, values, errors, isSubmitting }) => (
+              <Box
+                maxWidth={800}
+                m="10px auto"
+                as="form"
+                onSubmit={handleSubmit as any}
+              >
+                <InputGroup size="md">
+                  <Input
+                    as={Field}
+                    borderRadius="4"
+                    bg="#FFFFFF"
+                    variant="flushed"
+                    pr="4.5rem"
+                    type="text"
+                    name="search"
+                    placeholder="What do you want to know"
+                    id="inputBox"
+                  />
+                  <InputLeftElement>
+                    <SearchIcon />
+                  </InputLeftElement>
+                  <InputRightElement width="4.5rem">
+                    <Button
+                      color="black"
+                      bgColor="#FBFBB3"
+                      h="1.75rem"
+                      size="md"
+                      type="submit"
+                      isLoading={isSubmitting}
+                      mr="1"
+                    >
+                      Search
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                  <Box>
+                    {sabioAnswer.length > 0 &&
+                    submitted &&
+                    sabioAnswer[0].intent != "Default Fallback Intent" && (
+                      <Stack textColor="#10006B">
+                        {sabioAnswer.map((answer, index) => {
+                          console.log("Answer is:", answer);
+                          return <SabioAnswer key={index} answer={answer} />;
+                        })}
+                      </Stack>
+                    )}
+
+                  {sabioAnswer.length == 0 && submitted && <EmptyResult />}
+                  {sabioAnswer.length > 0 &&
+                    submitted &&
+                    sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
+
+                  {stackAnswer.length > 0 && submitted && (
+                    <Stack textColor="#10006B">
+                      {stackAnswer.map((answer, index) => {
+                        console.log("Answer is:", answer);
+                        return <StackOverflowAnswer key={index} answer={answer} />;
+                      })}
+                    </Stack>
+                  )}
+                  {confAnswer.length > 0 && submitted && (
+                    <Stack textColor="#10006B">
+                      {confAnswer.map((answer, index) => {
+                        console.log("Answer is:", answer);
+                        return <SabioAnswer key={index} answer={answer} />;
+                      })}
+                    </Stack>
+                  )}
+                </Box>
+              </Box>
             )}
-
-          {sabioAnswer.length == 0 && submitted && <EmptyResult />}
-          {sabioAnswer.length > 0 &&
-            submitted &&
-            sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
-
-      {stackAnswer.length > 0 && submitted && (
-        <Stack textColor="#10006B">
-          {stackAnswer.map((answer, index) => {
-            console.log("Answer is:", answer);
-            return <StackOverflowAnswer key={index} answer={answer} />;
-          })}
-        </Stack>
-      )}
-
-          {confAnswer.length > 0 && submitted && (
-            <Stack textColor="#10006B">
-              {confAnswer.map((answer, index) => {
-                console.log("Answer is:", answer);
-                return <SabioAnswer key={index} answer={answer} />;
-              })}
-            </Stack>
-          )}
-          </Box>
+          </Formik>
+        </Box>
       </Stack>
     </Layout>
   );

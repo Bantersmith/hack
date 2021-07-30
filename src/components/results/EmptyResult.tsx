@@ -30,7 +30,6 @@ export const EmptyResult: React.FC<EmptyResultProps> = ({
           fontWeight="semibold"
           as="h1"
           lineHeight="tight"
-          isTruncated
         >
           <Text fontSize="2xl">Good Question 🤔</Text>
         </Box>
