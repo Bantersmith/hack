@@ -90,6 +90,23 @@ const Index = (props) => {
     setSubmitting(false);
   };
 
+  const onSubmitAlternate = async (
+    values: any
+    
+  ) => {
+    const answers = await getSearch(values.search);
+    console.log("Answers:", answers);
+    sabioAnswerArr.push(answers.dialogflowResponse);
+    stackAnswerArr.push(answers.stackoverflowResponse);
+    confAnswerArr.push(answers.confluenceResponse);
+
+    //Set the resutls
+    setSabioAnswer(sabioAnswerArr);
+    setStackAnswer(stackAnswerArr);
+    setConfAnswer(confAnswerArr);
+    setSubmitted(true);
+  };
+
   return (
     <Layout>
       <Head>
@@ -97,8 +114,8 @@ const Index = (props) => {
       </Head>
       <Stack direction="row">
         <Stack d={{ base: "none", xl: "block" }}>
-          <TopFive questions={props.questions} />
-          <RecentQuestions questions={props.recents} />
+          <TopFive questions={props.questions} onSubmit={onSubmitAlternate} />
+          <RecentQuestions questions={props.recents} onSubmit={onSubmitAlternate} />
         </Stack>
         <Box w="100%">
           <Formik
