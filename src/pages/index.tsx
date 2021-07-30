@@ -18,24 +18,27 @@ import { StackOverflowAnswer } from "../components/results/StackOverflowAnswer";
 import { ISabioAnswer } from "../types/types";
 import { TopFive } from "../components/results/TopFive";
 import { RecentQuestions } from "../components/results/RecentQuestions";
-import Head from "next/head"
+import Head from "next/head";
+import { ConfluenceAnswer } from "../components/results/ConfluenceAnswer";
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   "../../hack-bot-318407-6493a8ac6783.json";
 
-  export async function getServerSideProps() {
-    const [top5response, recentResponse] = await Promise.all([
-      fetch(`https://intent.davidwalker.dev/stats/top/5`, {
-      method: "GET"}), 
-      fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
-      method: "GET"}), 
-    ]);
-    const [questions, recents] = await Promise.all([
-      top5response.json(), 
-      recentResponse.json()
-    ]);
-    return { props: { questions, recents } };
-  }
+export async function getServerSideProps() {
+  const [top5response, recentResponse] = await Promise.all([
+    fetch(`https://intent.davidwalker.dev/stats/top/5`, {
+      method: "GET",
+    }),
+    fetch(`https://intent.davidwalker.dev/stats/recent/5`, {
+      method: "GET",
+    }),
+  ]);
+  const [questions, recents] = await Promise.all([
+    top5response.json(),
+    recentResponse.json(),
+  ]);
+  return { props: { questions, recents } };
+}
 
 const getSearch = async (term) => {
   const response = await fetch(
@@ -92,8 +95,8 @@ const Index = (props) => {
       <Head>
         <title>Onboardabot</title>
       </Head>
-      <Stack direction ="row">
-        <Stack d={{base: "none", "xl": "block"}}> 
+      <Stack direction="row">
+        <Stack d={{ base: "none", xl: "block" }}>
           <TopFive questions={props.questions} />
           <RecentQuestions questions={props.recents} />
         </Stack>
@@ -139,8 +142,8 @@ const Index = (props) => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
-                  <Box>
-                    {sabioAnswer.length > 0 &&
+                <Box>
+                  {sabioAnswer.length > 0 &&
                     submitted &&
                     sabioAnswer[0].intent != "Default Fallback Intent" && (
                       <Stack textColor="#10006B">
@@ -154,21 +157,25 @@ const Index = (props) => {
                   {sabioAnswer.length == 0 && submitted && <EmptyResult />}
                   {sabioAnswer.length > 0 &&
                     submitted &&
-                    sabioAnswer[0].intent == "Default Fallback Intent" && <EmptyResult />}
+                    sabioAnswer[0].intent == "Default Fallback Intent" && (
+                      <EmptyResult />
+                    )}
 
-                  {stackAnswer.length > 0 && submitted && (
-                    <Stack textColor="#10006B">
-                      {stackAnswer.map((answer, index) => {
-                        console.log("Answer is:", answer);
-                        return <StackOverflowAnswer key={index} answer={answer} />;
-                      })}
-                    </Stack>
-                  )}
                   {confAnswer.length > 0 && submitted && (
                     <Stack textColor="#10006B">
                       {confAnswer.map((answer, index) => {
                         console.log("Answer is:", answer);
-                        return <SabioAnswer key={index} answer={answer} />;
+                        return <ConfluenceAnswer key={index} answer={answer} />;
+                      })}
+                    </Stack>
+                  )}
+                  {stackAnswer.length > 0 && submitted && (
+                    <Stack textColor="#10006B">
+                      {stackAnswer.map((answer, index) => {
+                        console.log("Answer is:", answer);
+                        return (
+                          <StackOverflowAnswer key={index} answer={answer} />
+                        );
                       })}
                     </Stack>
                   )}
