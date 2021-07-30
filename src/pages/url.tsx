@@ -1,11 +1,11 @@
-import { Box, Button } from "@chakra-ui/react";
+import {Box, Button, Center} from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import React, { useState } from "react";
 import { InputField } from "../components/InputField";
 import { Layout } from "../components/Layout";
 import * as Yup from "yup";
 import Head from "next/head"
-
+import { useToast } from "@chakra-ui/react"
 const url = () => {
   const validationSchema = Yup.object({
     url: Yup.string()
@@ -16,6 +16,7 @@ const url = () => {
       .required("Please enter website"),
     slug: Yup.string().required(),
   });
+  const toast = useToast()
 
   const onSubmit = async (
     values: any,
@@ -26,12 +27,43 @@ const url = () => {
       mode: "cors",
       body: `${values.url}`,
     });
-
     const data = await response.text();
     console.log("Data:", data);
     console.log(JSON.stringify(values, null, 2));
     setSubmitting(false);
     resetForm();
+    if (response.status == 200) {
+      toast({
+        title: "URL Shortened",
+        position: "bottom-right",
+        description: "We've created your shortened URL: www.thesab.io/" + values.slug,
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+        render: () => (
+            <Box color="white" p={3} bg="green">
+              Success!<br/>
+              Your URL was shortened to:<br/>
+              www.thesab.io/{values.slug}
+            </Box>
+        )
+      } )
+    } else {
+      toast({
+        title: "Error",
+        position: "bottom-right",
+        description: "Something went wrong creating your URL",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+        render: () => (
+            <Box color="white" p={3} bg="red">
+              Error
+            </Box>
+        )
+      } )
+    }
+
   };
 
   return (
