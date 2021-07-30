@@ -16,7 +16,7 @@ const NavBar: React.FC<NavBarProps> = ({}) => {
           </Link>
         </Box>
         <Spacer />
-        <Link href="/url" color="white" p="4">
+        <Link d={{ base: "none", "sm": "block" }} href="/url" color="white" p="4">
           URL Shorten
         </Link>
         <Box ml={"auto"}>{body}</Box>
