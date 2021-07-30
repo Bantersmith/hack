@@ -26,7 +26,7 @@ export const SabioAnswer: React.FC<AnswerResultProps> = ({
         key={answer.detail}
       >
         {answer.imageUrl && (
-          <Image src={answer.imageUrl} h="50px" />
+          <Image src={answer.imageUrl} h="80px" pt={2} />
         )}
         <Box p={{base: "8px 0", "md": "4"}}>
           <Box
